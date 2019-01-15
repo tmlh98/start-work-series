@@ -8,41 +8,43 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import xyz.tmlh.config.Bean;
 import xyz.tmlh.config.Property;
-import xyz.tmlh.config.parse.ConfigManager;
+import xyz.tmlh.config.parse.XmlConfigManager;
+import xyz.tmlh.type.ScopeType;
 
-public class ClassPathXmlApplicationContext implements BeanFactory {
+public class ClassPathXmlApplicationContext extends AbstractBeanFactory {
 
-    // 获得读取的配置文件中的Map信息
-    private Map<String, Bean> map;
-    
-    // 作为IOC容器使用,放置sring放置的对象
-    private Map<String, Object> context = new HashMap<String, Object>();
+    /**
+     * 获得读取的配置文件中的Map信息
+    */
+    protected Map<String, Bean> map;
 
     public ClassPathXmlApplicationContext(String path) {
+        XmlConfigManager xmlConfigManager = new XmlConfigManager();
         // 1.读取配置文件得到需要初始化的Bean信息
-        map = ConfigManager.getConfig(path);
+        map = xmlConfigManager.getConfig(path);
         // 2.遍历配置,初始化Bean
+        init();
+    }
+
+    public void init() {
         for (Entry<String, Bean> en : map.entrySet()) {
             String beanName = en.getKey();
             Bean bean = en.getValue();
 
             Object existBean = context.get(beanName);
             // 当容器中为空并且bean的scope属性为singleton时
-            if (existBean == null && bean.getScope().equals("singleton")) {
+            if (existBean == null && bean.getScope().equals(ScopeType.SINGLETON)) {
                 // 根据字符串创建Bean对象
                 Object beanObj = createBean(bean);
-
                 // 把创建好的bean对象放置到map中去
                 context.put(beanName, beanObj);
             }
         }
-
     }
 
-    // 通过反射创建对象
-    private Object createBean(Bean bean) {
+    public Object createBean(Bean bean) {
         // 创建该类对象
-        Class clazz = null;
+        Class<?> clazz = null;
         try {
             clazz = Class.forName(bean.getClassName());
         } catch (ClassNotFoundException e) {
@@ -116,7 +118,6 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
         if (bean == null) {
             bean = createBean(map.get(name));
         }
-
         return bean;
     }
 

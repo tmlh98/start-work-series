@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <beans>
 
-	<bean name="student" class="xyz.tmlh.entity.Student">
+	<bean id="student" class="xyz.tmlh.entity.Student">
 		<property name="name" value="123"></property>
 	</bean>
+	
+	<bean id="student1" class="xyz.tmlh.entity.Student">
+		<property name="name" value="111"></property>
+	</bean>
 
-	<bean name="teacher" class="xyz.tmlh.entity.Teacher">
+	<bean id="teacher" class="xyz.tmlh.entity.Teacher">
 		<property name="student" ref="student"></property>
 	</bean>
 	
-	<bean name="person" class="xyz.tmlh.entity.Person" scope="prototype">
+	<bean id="person" class="xyz.tmlh.entity.Person" scope="prototype">
 		<property name="teacher" ref="teacher"></property>
 		<property name="student" ref="student"></property>
 	</bean>

@@ -12,16 +12,16 @@ import org.dom4j.io.SAXReader;
 
 import xyz.tmlh.config.Bean;
 import xyz.tmlh.config.Property;
+import xyz.tmlh.type.ScopeType;
 
-public class ConfigManager {
-
-    private static Map<String, Bean> map = new HashMap<String, Bean>();
+public class XmlConfigManager{
 
     /**
      * 读取配置文件并返回读取结果
      * 返回Map集合便于注入,key是每个Bean的name属性,value是对应的那个Bean对象
      */
-    public static Map<String, Bean> getConfig(String path) {
+    public Map<String, Bean> getConfig(String path) {
+        Map<String, Bean> map = new HashMap<String, Bean>();
         /*dom4j实现
          *  1.创建解析器
          *  2.加载配置文件,得到document对象
@@ -36,7 +36,7 @@ public class ConfigManager {
         // 1.创建解析器
         SAXReader reader = new SAXReader();
         // 2.加载配置文件,得到document对象
-        InputStream is = ConfigManager.class.getResourceAsStream(path);
+        InputStream is = XmlConfigManager.class.getResourceAsStream(path);
         Document doc = null;
         try {
             doc = reader.read(is);
@@ -55,13 +55,13 @@ public class ConfigManager {
             // 4.3将属性name/value/ref分装到类Property类中
             for (Element bean : list) {
                 Bean b = new Bean();
-                String name = bean.attributeValue("name");
+                String id = bean.attributeValue("id");
                 String clazz = bean.attributeValue("class");
                 String scope = bean.attributeValue("scope");
-                b.setName(name);
+                b.setId(id);
                 b.setClassName(clazz);
                 if (scope != null) {
-                    b.setScope(scope);
+                    b.setScope(ScopeType.getScopt(scope));
                 }
                 // 4.2获得bean下的所有property子元素
                 List<Element> children = bean.elements("property");
@@ -81,7 +81,7 @@ public class ConfigManager {
                     }
                 }
                 // 6.将bean对象封装到Map集合中,返回map
-                map.put(name, b);
+                map.put(id, b);
             }
         }
 

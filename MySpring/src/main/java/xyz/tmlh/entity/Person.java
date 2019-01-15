@@ -18,4 +18,11 @@ public class Person {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+    
+    @Override
+    public String toString() {
+        return "Person [student=" + student + ", teacher=" + teacher + "]";
+    }
+    
+    
 }

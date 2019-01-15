@@ -8,7 +8,9 @@ package xyz.tmlh.config;
 public class Property {
 
     private String name;
+    
     private String value;
+    
     private String ref;
     
     public String getName() {
@@ -29,6 +31,4 @@ public class Property {
     public void setRef(String ref) {
         this.ref = ref;
     }
-
-    
 }
