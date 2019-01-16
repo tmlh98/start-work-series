@@ -1,7 +1,6 @@
 package xyz.tmlh.test;
 
 import java.lang.reflect.InvocationTargetException;
-import java.text.Annotation;
 
 import org.junit.Test;
 

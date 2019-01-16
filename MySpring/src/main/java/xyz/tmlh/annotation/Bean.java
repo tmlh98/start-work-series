@@ -23,7 +23,7 @@ import xyz.tmlh.type.ScopeType;
  * Description:
  * </p>
  */
-@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Bean {

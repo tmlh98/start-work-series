@@ -22,17 +22,6 @@ public class XmlConfigManager{
      */
     public Map<String, Bean> getConfig(String path) {
         Map<String, Bean> map = new HashMap<String, Bean>();
-        /*dom4j实现
-         *  1.创建解析器
-         *  2.加载配置文件,得到document对象
-         *  3.定义xpath表达式,取出所有Bean元素
-         *  4.对Bean元素继续遍历
-         *      4.1将Bean元素的name/class属性封装到bean类属性中
-         *      4.2获得bean下的所有property子元素
-         *      4.3将属性name/value/ref分装到类Property类中
-         *  5.将property对象封装到bean对象中
-         *  6.将bean对象封装到Map集合中,返回map 
-            */
         // 1.创建解析器
         SAXReader reader = new SAXReader();
         // 2.加载配置文件,得到document对象
