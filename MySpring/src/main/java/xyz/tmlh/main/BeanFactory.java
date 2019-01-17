@@ -8,7 +8,7 @@
  * specified, unless otherwise noted, and may not be reproduced or distributed
  * in whole or in part in any form or medium without express written permission.
  */
- package xyz.tmlh.main;
+package xyz.tmlh.main;
 
 import xyz.tmlh.config.Bean;
 
@@ -27,7 +27,9 @@ import xyz.tmlh.config.Bean;
  */
 public interface BeanFactory {
     
-    public Object getBean(String name);
+    Object getBean(String name);
     
-    public Object createBean(Bean bean);
+    <T>T getBean(Class<T> clazz) throws Exception;
+    
+    Object createBean(Bean bean);
 }

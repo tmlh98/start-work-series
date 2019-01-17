@@ -5,6 +5,7 @@ import xyz.tmlh.annotation.Configuration;
 import xyz.tmlh.entity.Person;
 import xyz.tmlh.entity.Student;
 import xyz.tmlh.entity.Teacher;
+import xyz.tmlh.type.ScopeType;
 
 @Configuration
 public class AnnotationConfig {
@@ -30,7 +31,7 @@ public class AnnotationConfig {
         return teacher;
     }
 
-    @Bean
+    @Bean(scope = ScopeType.PROTOTYPE)
     public Person person() {
         Person person = new Person();
         person.setStudent(student());

@@ -1,5 +1,7 @@
 package xyz.tmlh.main;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,15 +53,17 @@ public class AnnotationConfigApplicationContext extends AbstractBeanFactory {
         }
         return obj;
     }
-    
+
     @Deprecated
     public Object getBean(String name) {
         Object bean = context.get(name);
         // 如果为空说明scope不是singleton,那么容器中是没有的,这里现场创建
         if (bean == null) {
-//            bean = createBean(map.get(name));
+            throw new RuntimeException("建议使用getBean(Class<T> clazz)");
         }
         return bean;
     }
+
+    
 
 }

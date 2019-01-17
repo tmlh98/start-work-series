@@ -4,12 +4,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import xyz.tmlh.annotation.Bean;
 import xyz.tmlh.annotation.Configuration;
+import xyz.tmlh.config.Property;
+import xyz.tmlh.type.ScopeType;
 
 public class AnnotationConfigMange{
 
