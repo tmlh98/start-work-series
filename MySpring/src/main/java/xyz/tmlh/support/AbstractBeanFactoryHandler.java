@@ -2,8 +2,10 @@ package xyz.tmlh.support;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import xyz.tmlh.entity.Bean;
+import xyz.tmlh.type.ScopeType;
 
 
 public abstract class AbstractBeanFactoryHandler implements BeanFactory{
@@ -40,6 +42,20 @@ public abstract class AbstractBeanFactoryHandler implements BeanFactory{
             throw new RuntimeException("Named is " + name + " cannot be found in the ioc!");
         }
         return bean;
+    }
+    
+    public void init(Object beanObj) {
+        for (Entry<String, Bean> en : map.entrySet()) {
+            String beanName = en.getKey();
+            Bean bean = en.getValue();
+
+            Object existBean = context.get(beanName);
+            // 当容器中为空并且bean的scope属性为singleton时
+            if (existBean == null && bean.getScope().equals(ScopeType.SINGLETON)) {
+                // 把创建好的bean对象放置到map中去
+                context.put(beanName, beanObj);
+            }
+        }
     }
     
 }

@@ -111,7 +111,7 @@ public class ClassPathXmlApplicationContext extends AbstractBeanFactoryHandler {
 
         return beanObj;
     }
-    
+
     public Object getBean(String name) {
         Object bean = context.get(name);
         // 如果为空说明scope不是singleton,那么容器中是没有的,这里现场创建

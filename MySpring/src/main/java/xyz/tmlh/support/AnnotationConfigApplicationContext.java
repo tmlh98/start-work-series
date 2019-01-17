@@ -40,7 +40,7 @@ public class AnnotationConfigApplicationContext extends AbstractBeanFactoryHandl
     }
 
     @SuppressWarnings("unchecked")
-    public <T>T getBean(Class<T> clazz) throws Exception {
+    public <T> T getBean(Class<T> clazz) throws Exception {
         T bean = null;
         int n = 0;
         for (Entry<String, Object> entry : context.entrySet()) {
@@ -55,12 +55,12 @@ public class AnnotationConfigApplicationContext extends AbstractBeanFactoryHandl
         if (n == 0) {
             for (Entry<String, Bean> entry : map.entrySet()) {
                 if (entry.getValue().getObj().getClass() == clazz) {
-                    if(entry.getValue().getScope().equals(ScopeType.PROTOTYPE)) {
-                       T newInstance = (T)entry.getValue().getObj().getClass().newInstance();
-                       BeanUtils.copyProperties(newInstance, entry.getValue().getObj());
-                       return newInstance; 
+                    if (entry.getValue().getScope().equals(ScopeType.PROTOTYPE)) {
+                        T newInstance = (T)entry.getValue().getObj().getClass().newInstance();
+                        BeanUtils.copyProperties(newInstance, entry.getValue().getObj());
+                        return newInstance;
                     }
-                    return  (T)entry.getValue().getObj();
+                    return (T)entry.getValue().getObj();
                 }
             }
             throw new RuntimeException("ioc not found " + clazz.getName());
@@ -68,6 +68,5 @@ public class AnnotationConfigApplicationContext extends AbstractBeanFactoryHandl
 
         return bean;
     }
-    
 
 }
