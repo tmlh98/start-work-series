@@ -8,9 +8,9 @@
  * specified, unless otherwise noted, and may not be reproduced or distributed
  * in whole or in part in any form or medium without express written permission.
  */
-package xyz.tmlh.main;
+package xyz.tmlh.support;
 
-import xyz.tmlh.config.Bean;
+import xyz.tmlh.entity.Bean;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package xyz.tmlh.config;
+package xyz.tmlh.entity;
 
 /**
  * <p>

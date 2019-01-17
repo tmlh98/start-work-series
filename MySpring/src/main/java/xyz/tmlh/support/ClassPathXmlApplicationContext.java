@@ -1,4 +1,4 @@
-package xyz.tmlh.main;
+package xyz.tmlh.support;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,12 +6,12 @@ import java.util.Map.Entry;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import xyz.tmlh.config.Bean;
-import xyz.tmlh.config.Property;
-import xyz.tmlh.config.parse.XmlConfigManager;
+import xyz.tmlh.config.XmlConfigManager;
+import xyz.tmlh.entity.Bean;
+import xyz.tmlh.entity.Property;
 import xyz.tmlh.type.ScopeType;
 
-public class ClassPathXmlApplicationContext extends AbstractBeanFactory {
+public class ClassPathXmlApplicationContext extends AbstractBeanFactoryHandler {
 
     /**
      * 获得读取的配置文件中的Map信息
@@ -111,7 +111,7 @@ public class ClassPathXmlApplicationContext extends AbstractBeanFactory {
 
         return beanObj;
     }
-
+    
     public Object getBean(String name) {
         Object bean = context.get(name);
         // 如果为空说明scope不是singleton,那么容器中是没有的,这里现场创建
@@ -120,6 +120,5 @@ public class ClassPathXmlApplicationContext extends AbstractBeanFactory {
         }
         return bean;
     }
-
 
 }

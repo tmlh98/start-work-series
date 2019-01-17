@@ -1,4 +1,4 @@
-package xyz.tmlh.config;
+package xyz.tmlh.entity;
 
 import java.util.ArrayList;
 import java.util.List;

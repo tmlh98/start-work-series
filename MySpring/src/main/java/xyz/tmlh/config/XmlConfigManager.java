@@ -1,4 +1,4 @@
-package xyz.tmlh.config.parse;
+package xyz.tmlh.config;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -10,8 +10,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
-import xyz.tmlh.config.Bean;
-import xyz.tmlh.config.Property;
+import xyz.tmlh.entity.Bean;
+import xyz.tmlh.entity.Property;
 import xyz.tmlh.type.ScopeType;
 
 public class XmlConfigManager{

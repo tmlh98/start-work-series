@@ -1,4 +1,4 @@
-package xyz.tmlh.config.parse;
+package xyz.tmlh.config;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 
 import xyz.tmlh.annotation.Bean;
 import xyz.tmlh.annotation.Configuration;
-import xyz.tmlh.config.Property;
+import xyz.tmlh.entity.Property;
 import xyz.tmlh.type.ScopeType;
 
 public class AnnotationConfigMange{
@@ -24,8 +24,8 @@ public class AnnotationConfigMange{
      * @throws IllegalArgumentException 
      * @throws IllegalAccessException 
      */
-    public Map<String, xyz.tmlh.config.Bean> getConfig(Class<?> clazz) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-        Map<String, xyz.tmlh.config.Bean> map = new HashMap<String, xyz.tmlh.config.Bean>();
+    public Map<String, xyz.tmlh.entity.Bean> getConfig(Class<?> clazz) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Map<String, xyz.tmlh.entity.Bean> map = new HashMap<String, xyz.tmlh.entity.Bean>();
         
         if(!isExistAnnotation(clazz.getAnnotations())) {
             throw new RuntimeException("not found annotation Configuration");
@@ -35,7 +35,7 @@ public class AnnotationConfigMange{
         for (Method method : methods) {
             Bean beanMethod = method.getAnnotation(Bean.class);
             if(beanMethod != null) {
-                xyz.tmlh.config.Bean bean = new xyz.tmlh.config.Bean();
+                xyz.tmlh.entity.Bean bean = new xyz.tmlh.entity.Bean();
                 bean.setId(method.getName());
                 try {
                     Object newInstance = clazz.newInstance();
