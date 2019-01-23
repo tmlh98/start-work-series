@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import xyz.tmlh.annotation.RequestMapping;
+import xyz.tmlh.annotation.RequestMapping.RequestMethod;
 import xyz.tmlh.servlet.support.InitServletProcessor;
 import xyz.tmlh.servlet.support.InitServletProcessorHolder;
 
@@ -34,22 +36,41 @@ public class DispatcherServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         InitServletProcessor initProcessor = new InitServletProcessorHolder();
         initProcessor.doLoadConfig(config);
-        handlerMapping = initProcessor.getHandlerMapping();
-        controllerMap = initProcessor.getControllerMap();
+        this.handlerMapping = initProcessor.getHandlerMapping();
+        this.controllerMap = initProcessor.getControllerMap();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doPost(req, resp);
+        String url = req.getRequestURI();
+        String contextPath = req.getContextPath();
+        Method method = handlerMapping.get(getUrl(url , contextPath ));
+        RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
+        if(RequestMethod.GET.equals(requestMapping.method())) {
+            try {
+                doDispatch(req, resp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            resp.getWriter().write("500! Request method 'POST' not supported");;
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            // 处理请求
-            doDispatch(req, resp);
-        } catch (Exception e) {
-            resp.getWriter().write("500!! Server Exception");
+        String url = req.getRequestURI();
+        String contextPath = req.getContextPath();
+        Method method = handlerMapping.get(getUrl(url , contextPath ));
+        RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
+        if(RequestMethod.POST.equals(requestMapping.method())) {
+            try {
+                doDispatch(req, resp);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            resp.getWriter().write("500!  Request method 'GET' not supported");;
         }
 
     }
@@ -59,16 +80,12 @@ public class DispatcherServlet extends HttpServlet {
             return;
         }
 
-        String url = req.getRequestURI();
-        String contextPath = req.getContextPath();
-
-        url = url.replace(contextPath, "").replaceAll("/+", "/");
-
+        String url = getUrl(req.getRequestURI() , req.getContextPath());
+        
         if (!this.handlerMapping.containsKey(url)) {
             resp.getWriter().write("404 NOT FOUND!");
             return;
         }
-
         Method method = this.handlerMapping.get(url);
 
         // 获取方法的参数列表
@@ -109,5 +126,9 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
     
+    public String getUrl(String url ,  String contextPath ){
+        return url.replace(contextPath, "").replaceAll("/+", "/");
+    }
+
 
 }

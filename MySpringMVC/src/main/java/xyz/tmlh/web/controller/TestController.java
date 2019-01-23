@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import xyz.tmlh.annotation.Controller;
 import xyz.tmlh.annotation.RequestMapping;
+import xyz.tmlh.annotation.RequestMapping.RequestMethod;
 import xyz.tmlh.annotation.RequestParam;
 
 /**  
@@ -28,7 +29,7 @@ public class TestController {
         }
     }
     
-   @RequestMapping("/doTest2")
+   @RequestMapping(value = "/doTest2" ,method = RequestMethod.GET)
     public void test2(HttpServletRequest request, HttpServletResponse response){
         try {
             response.getWriter().println("doTest2 method success!");

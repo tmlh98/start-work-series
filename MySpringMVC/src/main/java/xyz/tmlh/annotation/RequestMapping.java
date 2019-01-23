@@ -11,10 +11,18 @@ import java.lang.annotation.Target;
 @Documented
 public @interface RequestMapping {
 
-	 /**
+    /**
      * 表示参数的别名
-     * @return
      */
     String value() default "";
+
+    /**
+     * 请求方式 默认为GET
+     */
+    RequestMethod method() default RequestMethod.GET;
+
+    public enum RequestMethod {
+        GET, POST
+    };
 
 }

@@ -19,7 +19,6 @@ public class InitServletProcessorHolder extends InitServletProcessor {
     @Override
     public void doLoadConfig(ServletConfig config) {
         String packageName = config.getInitParameter(CONTEXT_CONFIG_LOCATION);
-        System.out.println("packageName : " + packageName);
         
         //把web.xml中的contextConfigLocation对应value值的文件加载到流里面
         try (InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(packageName);){
